@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  grid-template-columns: 1fr 450px;
+}
+.bookshelf {
+  border: 2px solid #334;
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 100px;
+}
