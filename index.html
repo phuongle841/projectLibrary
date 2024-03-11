@@ -9,27 +9,28 @@
   </head>
   <body>
     <div class="container">
-      <div class="bookshelf">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <div class="bookshelf"></div>
     </div>
-    <dialog open>
-      <p>Greetings, one and all!</p>
-      <form method="dialog">
-        <form action="">
-          <label for="name">title</label>
+    <!-- A modal dialog containing a form -->
+    <dialog id="favDialog">
+      <form>
+        <p>
+          <label for="title">title of the book</label>
           <input type="text" name="title" id="title" />
-          <label for="author">author</label>
+          <label for="author">author of the book</label>
           <input type="text" name="author" id="author" />
-          <label for="NoOfPage">Number of Page</label>
-          <input type="number" name="NoOfPage" id="NoOfPage" />
-          <label for="read">Have you read it?</label>
-          <input type="checkbox" name="read" id="read" />
-          <button type="submit">Add book</button>
-        </form>
+          <label for="noOfPage">number of pages</label>
+          <input type="number" name="noOfPage" id="noOfPage" />
+        </p>
+        <div>
+          <button value="cancel" formmethod="dialog">Cancel</button>
+          <button id="confirmBtn" value="default">Confirm</button>
+        </div>
       </form>
     </dialog>
+    <p>
+      <button id="showDialog">Show the dialog</button>
+    </p>
+    <output></output>
   </body>
 </html>
