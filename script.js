@@ -1,5 +1,5 @@
 const bookshelf = document.querySelector(".bookshelf");
-const myLibrary = [];
+let myLibrary = [];
 
 function Book(title, author, noOfPage) {
   // the constructor...
@@ -13,7 +13,7 @@ function addBookToLibrary(Book) {
   myLibrary.push(Book);
 }
 
-function displayBooks(myLibrary) {
+function displayBooks() {
   for (let index = 0; index < myLibrary.length; index++) {
     const element = myLibrary[index];
     cubby = document.createElement("div");
@@ -35,41 +35,39 @@ for (let index = 0; index < 1; index++) {
 displayBooks(myLibrary);
 
 // ================
-let bookInformation = [];
-
+let inputBoxes = [];
+let newBook;
 const showButton = document.getElementById("showDialog");
 const favDialog = document.getElementById("favDialog");
 const outputBox = document.querySelector("output");
 const selectTitle = favDialog.querySelector("#title");
 const selectAuthor = favDialog.querySelector("#author");
 const selectNoOfPage = favDialog.querySelector("#noOfPage");
-bookInformation.push(selectTitle);
-bookInformation.push(selectAuthor);
-bookInformation.push(selectNoOfPage);
-console.log(bookInformation);
 const confirmBtn = favDialog.querySelector("#confirmBtn");
 
-// "Show the dialog" button opens the <dialog> modally
+inputBoxes.push(selectTitle, selectAuthor, selectNoOfPage);
+
 showButton.addEventListener("click", () => {
+  newBook = new Book("default", "default", "0");
   favDialog.showModal();
 });
 
 // "Favorite animal" input sets the value of the submit button
 // Personal: 3 box into an array
 
-bookInformation.forEach((eachInput) => {
-  eachInput.addEventListener("change", (e) => {});
-});
-// "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
-favDialog.addEventListener("close", (e) => {
-  outputBox.value =
-    favDialog.returnValue === "default"
-      ? "No return value."
-      : `ReturnValue: ${favDialog.returnValue}.`; // Have to check for "default" rather than empty string
+inputBoxes.forEach((eachInput) => {
+  eachInput.addEventListener("change", (e) => {
+    newBook[eachInput.id] = eachInput.value;
+    console.log(newBook);
+  });
 });
 
-// Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
+favDialog.addEventListener("close", (e) => {
+  // this is remove the book
+});
 confirmBtn.addEventListener("click", (event) => {
-  event.preventDefault(); // We don't want to submit this fake form
-  favDialog.close(selectEl.value); // Have to send the select box value here.
+  event.preventDefault();
+  favDialog.close();
+  myLibrary.push(newBook);
+  displayBooks();
 });
