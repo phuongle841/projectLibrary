@@ -1,8 +1,10 @@
 const bookshelf = document.querySelector(".bookshelf");
 let myLibrary = [];
 
+let id = 0;
 function Book(title, author, noOfPage) {
   // the constructor...
+  this.id = id++;
   this.title = title;
   this.author = author;
   this.noOfPage = noOfPage;
@@ -13,16 +15,27 @@ function addBookToLibrary(Book) {
   myLibrary.push(Book);
 }
 
-function displayBooks() {
+function displayPresetBooks() {
   for (let index = 0; index < myLibrary.length; index++) {
     const element = myLibrary[index];
-    cubby = document.createElement("div");
-    cubby.classList = "book";
-    cubby.innerHTML = `${element.title}`;
-    bookshelf.appendChild(cubby);
+    addBook(element);
   }
 }
 
+function addBook(book) {
+  let cubby = document.createElement("div");
+  let removeBtn = document.createElement("button");
+  let cover = document.createElement("img");
+  let titleP = document.createElement("p");
+
+  removeBtn.innerText = "remove";
+  titleP.innerText = `${book.title}`;
+  cubby.appendChild(titleP);
+  cubby.appendChild(removeBtn);
+  cubby.classList = "book";
+  bookshelf.appendChild(cubby);
+  console.log(book);
+}
 for (let index = 0; index < 1; index++) {
   const Book1 = new Book("how to get balls", "James", 2002);
   addBookToLibrary(Book1);
@@ -32,7 +45,16 @@ for (let index = 0; index < 1; index++) {
   addBookToLibrary(Book3);
 }
 
-displayBooks(myLibrary);
+function summonElement() {
+  myLibrary.forEach((element) => {
+    element.addEventListener("click", (event) => {
+      console.log(event);
+    });
+  });
+}
+
+displayPresetBooks(myLibrary);
+console.log(myLibrary);
 
 // ================
 let inputBoxes = [];
@@ -48,17 +70,21 @@ const confirmBtn = favDialog.querySelector("#confirmBtn");
 inputBoxes.push(selectTitle, selectAuthor, selectNoOfPage);
 
 showButton.addEventListener("click", () => {
-  newBook = new Book("default", "default", "0");
+  newBook = new Book(`${myLibrary.length}`, "default", "default", "0");
   favDialog.showModal();
 });
 
 // "Favorite animal" input sets the value of the submit button
 // Personal: 3 box into an array
-
+function removeInput() {
+  inputBoxes.forEach((element) => {
+    element.value = "";
+  });
+}
+removeInput();
 inputBoxes.forEach((eachInput) => {
   eachInput.addEventListener("change", (e) => {
     newBook[eachInput.id] = eachInput.value;
-    console.log(newBook);
   });
 });
 
@@ -69,5 +95,7 @@ confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
   favDialog.close();
   myLibrary.push(newBook);
-  displayBooks();
+  addBook(newBook);
+  console.log(myLibrary.pop());
+  removeInput();
 });
