@@ -1,6 +1,6 @@
 const bookshelf = document.querySelector(".bookshelf");
 let myLibrary = [];
-
+let bookAndRemoveBtn = [];
 let id = 0;
 function Book(title, author, noOfPage) {
   // the constructor...
@@ -11,7 +11,6 @@ function Book(title, author, noOfPage) {
 }
 
 function addBookToLibrary(Book) {
-  // do stuff here
   myLibrary.push(Book);
 }
 
@@ -21,21 +20,31 @@ function displayPresetBooks() {
     addBook(element);
   }
 }
-
+for (const key in myLibrary) {
+  if (Object.hasOwnProperty.call(myLibrary, key)) {
+    const element = myLibrary[key];
+    console.log(element);
+  }
+}
 function addBook(book) {
   let cubby = document.createElement("div");
   let removeBtn = document.createElement("button");
   let cover = document.createElement("img");
   let titleP = document.createElement("p");
-
   removeBtn.innerText = "remove";
+  removeBtn.addEventListener("click", removeBook);
   titleP.innerText = `${book.title}`;
   cubby.appendChild(titleP);
   cubby.appendChild(removeBtn);
   cubby.classList = "book";
   bookshelf.appendChild(cubby);
-  console.log(book);
+  bookAndRemoveBtn.push([cubby, removeBtn]);
 }
+
+/*
+  the idea is that the my library need a connection with the book on the display
+*/
+console.log(bookAndRemoveBtn);
 for (let index = 0; index < 1; index++) {
   const Book1 = new Book("how to get balls", "James", 2002);
   addBookToLibrary(Book1);
@@ -44,17 +53,20 @@ for (let index = 0; index < 1; index++) {
   const Book3 = new Book("how to get semen", "Jennifer", 1999);
   addBookToLibrary(Book3);
 }
-
-function summonElement() {
-  myLibrary.forEach((element) => {
-    element.addEventListener("click", (event) => {
-      console.log(event);
-    });
-  });
+function removeFromMyLibrary(element) {
+  console.log(element);
+  const index = myLibrary.indexOf(element);
+  if (index > -1) {
+    myLibrary.splice(index, 1);
+  }
 }
-
+function removeBook(e) {
+  let parent = e.target.closest("div");
+  removeFromMyLibrary(parent);
+  console.log(myLibrary);
+  // parent.remove();
+}
 displayPresetBooks(myLibrary);
-console.log(myLibrary);
 
 // ================
 let inputBoxes = [];
@@ -65,12 +77,13 @@ const outputBox = document.querySelector("output");
 const selectTitle = favDialog.querySelector("#title");
 const selectAuthor = favDialog.querySelector("#author");
 const selectNoOfPage = favDialog.querySelector("#noOfPage");
+const readOrNot = favDialog.querySelector("read");
 const confirmBtn = favDialog.querySelector("#confirmBtn");
 
 inputBoxes.push(selectTitle, selectAuthor, selectNoOfPage);
 
 showButton.addEventListener("click", () => {
-  newBook = new Book(`${myLibrary.length}`, "default", "default", "0");
+  newBook = new Book("default", "default", "0");
   favDialog.showModal();
 });
 
@@ -89,13 +102,24 @@ inputBoxes.forEach((eachInput) => {
 });
 
 favDialog.addEventListener("close", (e) => {
-  // this is remove the book
+  newBook = new Book("default", "default", "0");
 });
+function checkValidBook(newBook) {
+  return !(
+    newBook.title == "default" ||
+    newBook.author === "default" ||
+    newBook.noOfPage == 0
+  );
+}
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  favDialog.close();
-  myLibrary.push(newBook);
-  addBook(newBook);
-  console.log(myLibrary.pop());
-  removeInput();
+
+  // favDialog.close();
+  if (checkValidBook(newBook)) {
+    myLibrary.push(newBook);
+    addBook(newBook);
+    removeInput();
+    favDialog.close();
+  } else {
+  }
 });

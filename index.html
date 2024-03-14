@@ -8,7 +8,12 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <header><h1>THE BEST LIBRARIES IN THE WORLD</h1></header>
+    <header>
+      <h1>THE BEST LIBRARY IN THE WORLD</h1>
+      <p>
+        <button id="showDialog">add book to the shelf</button>
+      </p>
+    </header>
     <div class="container">
       <div class="bookshelf"></div>
     </div>
@@ -16,21 +21,22 @@
     <dialog id="favDialog">
       <form>
         <p>
-          <label for="title">title of the book</label>
+          <label for="title" required>title of the book</label>
           <input type="text" name="title" id="title" />
-          <label for="author">author of the book</label>
+          <label for="author" required>author of the book</label>
           <input type="text" name="author" id="author" />
-          <label for="noOfPage">number of pages</label>
+          <label for="noOfPage" required>number of pages</label>
           <input type="number" name="noOfPage" id="noOfPage" />
+          <label for="read">Scales</label>
+          <input type="checkbox" id="read" name="read" checked />
         </p>
         <div>
           <button value="cancel" formmethod="dialog">Cancel</button>
-          <button id="confirmBtn" value="default">Confirm</button>
+          <button id="confirmBtn" value="default" formnovalidate>
+            Confirm
+          </button>
         </div>
       </form>
     </dialog>
-    <p>
-      <button id="showDialog">Show the dialog</button>
-    </p>
   </body>
 </html>
