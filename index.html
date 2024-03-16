@@ -11,26 +11,33 @@
     <header>
       <h1>THE BEST LIBRARY IN THE WORLD</h1>
       <p>
-        <button id="showDialog">add book to the shelf</button>
+        <button id="showDialog">add books</button>
       </p>
     </header>
     <div class="container">
       <div class="bookshelf"></div>
     </div>
-    <!-- A modal dialog containing a form -->
     <dialog id="favDialog">
       <form>
         <p>
-          <label for="title" required>title of the book</label>
-          <input type="text" name="title" id="title" />
-          <label for="author" required>author of the book</label>
-          <input type="text" name="author" id="author" />
-          <label for="noOfPage" required>number of pages</label>
-          <input type="number" name="noOfPage" id="noOfPage" />
-          <label for="read">Finish</label>
-          <input type="checkbox" id="read" name="read" checked />
+          <legend>
+            <label for="title" required>Title of the book</label>
+            <input type="text" name="title" id="title" />
+          </legend>
+          <legend>
+            <label for="author" required>Author of the book</label>
+            <input type="text" name="author" id="author" />
+          </legend>
+          <legend>
+            <label for="noOfPage" required>Number of pages</label>
+            <input type="number" name="noOfPage" id="noOfPage" />
+          </legend>
+          <legend class="checkbox">
+            <label for="read">Status</label>
+            <input type="checkbox" id="read" name="read" checked />
+          </legend>
         </p>
-        <div>
+        <div class="bottomButtons">
           <button value="cancel" formmethod="dialog">Cancel</button>
           <button id="confirmBtn" value="default" formnovalidate>
             Confirm

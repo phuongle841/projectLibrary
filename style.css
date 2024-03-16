@@ -1,6 +1,7 @@
 * {
-  /* border: 1px solid rgb(255, 255, 255); */
   color: #fff;
+  font-family: "Montserrat", sans-serif;
+  user-select: none;
 }
 body {
   background-image: url("/background.jpg");
@@ -18,16 +19,17 @@ header {
   justify-content: center;
 }
 .bookshelf {
-  padding: 10px;
-  border: 2px solid #fff;
-  border-radius: 20px;
   width: 1000px;
   height: 80vh;
-  overflow: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-auto-rows: 280px;
+  padding: 10px;
   gap: 20px;
+  border-radius: 20px;
+  border: 2px solid rgb(151, 151, 151);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-auto-rows: 280px;
+  overflow: auto;
+  box-shadow: 5px 20px 35px #00303857;
 }
 .bookshelf::-webkit-scrollbar {
   display: none;
@@ -40,29 +42,68 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color: #888;
+  padding: 10px;
 }
 .book:hover {
-  box-shadow: 5px 10px 10px #334;
+  box-shadow: 5px 20px 35px #00303857;
 }
-.book p {
+.book * {
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.book .boxInform {
+  width: 100%;
+}
+.boxInform p:nth-child(2) {
+  cursor: pointer;
 }
 dialog {
   background-image: url(/dialogbackground2.jpg);
   background-size: contain;
-  color: #334;
+  border: 1px solid rgb(151, 151, 151);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 5px 20px 35px #00303857;
+}
+dialog form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form p {
+  display: grid;
+  gap: 10px;
+}
+legend {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+legend.checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 button {
+  font-size: 15px;
   background: transparent;
   border-color: #fff;
   border-radius: 5px;
+  font-family: "Montserrat", sans-serif;
 }
 input {
+  font-size: 16px;
+  border-radius: 5px;
   background-color: transparent;
+  border: 1px solid #fff;
 }
-
 input::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
+}
+.bottomButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }

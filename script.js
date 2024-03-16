@@ -1,6 +1,7 @@
 const bookshelf = document.querySelector(".bookshelf");
 let myLibrary = [];
 let id = 0;
+
 function Book(title, author, noOfPage, status) {
   this.id = id++;
   this.title = title;
@@ -40,8 +41,18 @@ function addBook(book) {
   informBox.appendChild(noOfPageP);
 
   let statusP = document.createElement("p");
+  statusP.addEventListener("click", () => {
+    if (book.status == "unfinished") {
+      book.status = "finished";
+    } else {
+      book.status = "unfinished";
+    }
+    statusP.innerText = `Status: ${book.status}`;
+  });
+
   statusP.innerText = `Status: ${book.status}`;
   informBox.appendChild(statusP);
+  informBox.classList.add("boxInform");
   cubby.appendChild(informBox);
 
   let removeBtn = document.createElement("button");
@@ -53,61 +64,66 @@ function addBook(book) {
   cubby.classList = "book";
   bookshelf.appendChild(cubby);
 }
-
-/*
-  the idea is that the my library need a connection with the book on the display
-*/
-for (let index = 0; index < 1; index++) {
-  const Book1 = new Book(
-    "Philosopher's Stone",
-    "J. K. Rowling",
-    2002,
-    "finished"
-  );
-  addBookToLibrary(Book1);
-  const Book2 = new Book(
-    "Chamber of Secrets",
-    "J. K. Rowling",
-    1982,
-    "finished"
-  );
-  addBookToLibrary(Book2);
-  const Book3 = new Book(
-    "Prisoner of Azkaban",
-    "J. K. Rowling",
-    1999,
-    "finished"
-  );
-  addBookToLibrary(Book3);
-  const Book4 = new Book("Goblet of Fire", "J. K. Rowling", 2000, "unfinished");
-  addBookToLibrary(Book4);
-  const Book5 = new Book(
-    "Order of the Phoenix",
-    "J. K. Rowling",
-    2000,
-    "unfinished"
-  );
-  addBookToLibrary(Book5);
-  const Book6 = new Book(
-    "Half-Blood Prince",
-    "J. K. Rowling",
-    2000,
-    "unfinished"
-  );
-  addBookToLibrary(Book6);
-  const Book7 = new Book(
-    "Deathly Hallows",
-    "J. K. Rowling",
-    2000,
-    "unfinished"
-  );
-  addBookToLibrary(Book7);
+function callPreset() {
+  for (let index = 0; index < 1; index++) {
+    const Book1 = new Book(
+      "Philosopher's Stone",
+      "J. K. Rowling",
+      2002,
+      "finished"
+    );
+    addBookToLibrary(Book1);
+    const Book2 = new Book(
+      "Chamber of Secrets",
+      "J. K. Rowling",
+      1982,
+      "finished"
+    );
+    addBookToLibrary(Book2);
+    const Book3 = new Book(
+      "Prisoner of Azkaban",
+      "J. K. Rowling",
+      1999,
+      "finished"
+    );
+    addBookToLibrary(Book3);
+    const Book4 = new Book(
+      "Goblet of Fire",
+      "J. K. Rowling",
+      2000,
+      "unfinished"
+    );
+    addBookToLibrary(Book4);
+    const Book5 = new Book(
+      "Order of the Phoenix",
+      "J. K. Rowling",
+      2000,
+      "unfinished"
+    );
+    addBookToLibrary(Book5);
+    const Book6 = new Book(
+      "Half-Blood Prince",
+      "J. K. Rowling",
+      2000,
+      "unfinished"
+    );
+    addBookToLibrary(Book6);
+    const Book7 = new Book(
+      "Deathly Hallows",
+      "J. K. Rowling",
+      2000,
+      "unfinished"
+    );
+    addBookToLibrary(Book7);
+  }
 }
+
 function removeFromMyLibrary(index) {
   if (index > -1) {
     myLibrary.splice(index, 1);
   }
 }
+
 function removeBook(e) {
   let parent = e.target.closest("div");
   for (let index = 0; index < myLibrary.length; index++) {
@@ -116,7 +132,6 @@ function removeBook(e) {
       removeFromMyLibrary(index);
     }
   }
-  removeFromMyLibrary(parent);
   parent.remove();
 }
 
@@ -132,8 +147,12 @@ const selectNoOfPage = favDialog.querySelector("#noOfPage");
 const selectStatus = favDialog.querySelector("#read");
 selectStatus.addEventListener("change", (e) => {
   console.log(selectStatus.checked);
+  if (selectStatus.checked) {
+    newBook.status = "finished";
+  } else {
+    newBook.status = "unfinished";
+  }
 });
-console.log(selectStatus);
 
 const confirmBtn = favDialog.querySelector("#confirmBtn");
 
@@ -153,10 +172,8 @@ function removeInput() {
     element.value = "";
   });
 }
-removeInput();
 inputBoxes.forEach((eachInput) => {
   eachInput.addEventListener("change", (e) => {
-    console.log(eachInput);
     newBook[eachInput.id] = eachInput.value;
   });
 });
@@ -176,8 +193,7 @@ confirmBtn.addEventListener("click", (event) => {
     addBook(newBook);
     removeInput();
     favDialog.close();
-  } else {
   }
 });
-
+callPreset();
 displayPresetBooks(myLibrary);
